@@ -89,12 +89,6 @@
       gap: 0.6rem;
     }
 
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-    }
-
     nav a {
       color: var(--text-main);
       text-decoration: none;
@@ -109,18 +103,23 @@
       color: var(--gold);
     }
 
-    /* Player de Música Místico Estilizado */
-    .music-widget {
+    /* Player Fixo / Flutuante no Rodapé da Tela */
+    .fixed-audio-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(20, 16, 41, 0.95);
+      border: 1px solid var(--gold);
+      padding: 0.6rem 1rem;
+      border-radius: 30px;
       display: flex;
       align-items: center;
-      gap: 0.6rem;
-      background: rgba(212, 175, 55, 0.1);
-      border: 1px solid var(--border-gold);
-      padding: 0.35rem 0.8rem;
-      border-radius: 20px;
+      gap: 0.8rem;
+      z-index: 9999;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.8), 0 0 15px var(--gold-glow);
     }
 
-    .music-widget span {
+    .fixed-audio-container span {
       font-family: 'Cinzel', serif;
       font-size: 0.78rem;
       color: var(--gold-light);
@@ -372,7 +371,6 @@
       transition: border-color 0.3s;
     }
 
-    /* Estilização para o calendário nativo abrir ao clicar em qualquer lugar do campo de data */
     input[type="date"] {
       cursor: pointer;
     }
@@ -466,9 +464,9 @@
     @media (max-width: 768px) {
       .form-grid { grid-template-columns: 1fr; }
       header { flex-direction: column; gap: 0.9rem; padding: 1rem 5%; }
-      .nav-right { flex-direction: column; gap: 0.8rem; }
       nav a { margin: 0 0.6rem; font-size: 0.8rem; }
       .booking-container { padding: 1.8rem; }
+      .fixed-audio-container { bottom: 10px; right: 10px; padding: 0.4rem 0.8rem; }
     }
   </style>
 </head>
@@ -476,26 +474,25 @@
 
   <div class="stars"></div>
 
+<!-- PLAYER DE ÁUDIO FIXO / FLUTUANTE USANDO O SEU ARQUIVO LOCAL -->
+<div class="fixed-audio-container">
+  <span>✦ Trilha Mística:</span>
+  <audio controls autoplay loop preload="auto" style="height: 28px; width: 130px; filter: invert(0.9) hue-rotate(180deg);">
+    <source src="musica.mp3" type="audio/mpeg">
+    Seu navegador não suporta áudio.
+  </audio>
+</div>
+
   <!-- Cabeçalho -->
   <header>
     <div class="brand">
       <span>✦</span> MÃE GABI
     </div>
-    <div class="nav-right">
-      <nav>
-        <a href="#tiragens">Tiragens</a>
-        <a href="#oraculo">Carta do Dia</a>
-        <a href="#agendar">Agendar</a>
-      </nav>
-      <!-- Player de Áudio Nativo Discreto (Já pronto para reproduzir) -->
-      <div class="music-widget">
-        <span>🎵 Som Místico:</span>
-        <audio controls autoplay loop style="height: 30px; width: 140px; filter: invert(0.9) hue-rotate(180deg);">
-          <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf756.mp3?filename=meditation-flute-and-bells-112151.mp3" type="audio/mpeg">
-          Seu navegador não suporta áudio.
-        </audio>
-      </div>
-    </div>
+    <nav>
+      <a href="#tiragens">Tiragens</a>
+      <a href="#oraculo">Carta do Dia</a>
+      <a href="#agendar">Agendar</a>
+    </nav>
   </header>
 
   <!-- Hero Section -->
@@ -600,9 +597,9 @@
           </select>
         </div>
 
-        <!-- Campo de Data com Calendário Nativo Integrado -->
+        <!-- Campo de Data com Calendário Nativo -->
         <div class="form-group">
-          <label for="data">Data Desejada (Clique para abrir calendário) *</label>
+          <label for="data">Data Desejada (Clique para abrir) *</label>
           <input type="date" id="data" onclick="this.showPicker && this.showPicker()">
         </div>
 
@@ -668,7 +665,7 @@
     }
 
     // ==========================================
-    // CARTA DO DIA
+    // CARTA DO DIAS
     // ==========================================
     const arcanos = [
       { nome: "XVII — A Estrela", msg: "Momento de cura, renovação e esperança. Confie na sua intuição: o caminho à frente está sendo iluminado." },
