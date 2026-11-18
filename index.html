@@ -555,7 +555,7 @@
           <p>Leitura objetiva para uma questão específica (amor, trabalho ou tomada de decisão imediata). Duração de 30 minutos via videochamada.</p>
         </div>
         <div>
-          <span class="price-tag">R\$ 90,00</span>
+          <span class="price-tag">R$ 90,00</span>
           <button type="button" class="btn-outline" onclick="selecionarServico('Templo de Afrodite & Foco (30 min)')">Escolher Esta Tiragem</button>
         </div>
       </div>
@@ -568,7 +568,7 @@
           <p>Análise profunda das energias atuais, bloqueios inconscientes, influências externas e tendências para os próximos 6 meses. Duração de 60 minutos.</p>
         </div>
         <div>
-          <span class="price-tag">R\$ 160,00</span>
+          <span class="price-tag">R$ 160,00</span>
           <button type="button" class="btn-outline" onclick="selecionarServico('Cruz Celta & Panorama (60 min)')">Escolher Esta Tiragem</button>
         </div>
       </div>
@@ -581,7 +581,7 @@
           <p>Mapeamento completo das 12 casas da sua vida (finanças, relacionamentos, espiritualidade e propósito) para os próximos 12 meses. Duração de 90 minutos.</p>
         </div>
         <div>
-          <span class="price-tag">R\$ 240,00</span>
+          <span class="price-tag">R$ 240,00</span>
           <button type="button" class="btn-outline" onclick="selecionarServico('Mandala Astrológica (90 min)')">Escolher Esta Tiragem</button>
         </div>
       </div>
@@ -622,9 +622,9 @@
         <div class="form-group">
           <label for="servico">Modalidade da Leitura</label>
           <select id="servico">
-            <option value="Templo de Afrodite & Foco (30 min)">Templo de Afrodite & Foco — R\$ 90</option>
-            <option value="Cruz Celta & Panorama (60 min)" selected>Cruz Celta & Panorama — R\$ 160</option>
-            <option value="Mandala Astrológica (90 min)">Mandala Astrológica — R\$ 240</option>
+            <option value="Templo de Afrodite & Foco (30 min)">Templo de Afrodite & Foco — R$ 90</option>
+            <option value="Cruz Celta & Panorama (60 min)" selected>Cruz Celta & Panorama — R$ 160</option>
+            <option value="Mandala Astrológica (90 min)">Mandala Astrológica — R$ 240</option>
           </select>
         </div>
 
@@ -808,4 +808,64 @@
       { nome: "XVII — A Estrela", msg: "Momento de cura, renovação e esperança. Confie na sua intuição: o caminho à frente está sendo iluminado." },
       { nome: "I — O Mago", msg: "Você já possui todas as ferramentas necessárias para manifestar o que deseja. Dê o primeiro passo com confiança." },
       { nome: "II — A Sacerdotisa", msg: "Silencie o ruído externo. As respostas que você procura estão na sua sabedoria interior e nos sinais sutis." },
-      { nome: "XIX — O Sol", msg: "Clareza, vitalidade
+      { nome: "XIX — O Sol", msg: "Clareza, vitalidade e sucesso se aproximam. Um período de transparência e alegria está se abrindo." },
+      { nome: "X — A Roda da Fortuna", msg: "Ciclos estão girando a seu favor. Esteja aberto às mudanças inesperadas que trazem novas oportunidades." }
+    ];
+
+    function tirarCarta() {
+      if (isPlayingMusic) tocarSinoCristalino(880);
+      const sorteada = arcanos[Math.floor(Math.random() * arcanos.length)];
+      document.getElementById('arcanaTitle').textContent = sorteada.nome;
+      document.getElementById('arcanaDesc').textContent = sorteada.msg;
+      document.getElementById('dailyResult').style.display = 'block';
+    }
+
+    // ==========================================
+    // 4. CONFIRMAÇÃO E WHATSAPP
+    // ==========================================
+    let dadosReserva = {};
+
+    function abrirResumoAgendamento() {
+      const nome = document.getElementById('nome').value.trim();
+      const whatsapp = document.getElementById('whatsapp').value.trim();
+      const servico = document.getElementById('servico').value;
+      const dataRaw = document.getElementById('data').value;
+      const hora = document.getElementById('horarioSelecionado').value;
+      const intencao = document.getElementById('intencao').value.trim();
+      const erroBox = document.getElementById('erroForm');
+
+      if (!nome || !whatsapp || !dataRaw) {
+        erroBox.style.display = 'block';
+        return;
+      }
+      erroBox.style.display = 'none';
+
+      const dataFormatada = dataRaw.split('-').reverse().join('/');
+      dadosReserva = { nome, whatsapp, servico, dataFormatada, hora, intencao };
+
+      document.getElementById('modalResumo').innerHTML = `
+        Olá, <strong>${nome}</strong>!<br><br>
+        Sua solicitação com <strong>Mãe Gabi</strong>:<br>
+        • <strong>Leitura:</strong> ${servico}<br>
+        • <strong>Data:</strong> ${dataFormatada} às <strong>${hora}</strong><br>
+        • <strong>Seu WhatsApp:</strong> ${whatsapp}<br><br>
+        Clique no botão dourado abaixo para enviar e confirmar direto no WhatsApp da Mãe Gabi.
+      `;
+
+      const modal = document.getElementById('confirmModal');
+      modal.classList.add('aberto');
+    }
+
+    function fecharModal() {
+      const modal = document.getElementById('confirmModal');
+      modal.classList.remove('aberto');
+    }
+
+    function enviarWhatsApp() {
+      const telefoneMaeGabi = "5581999999999"; // Substitua pelo número real da Mãe Gabi
+      const texto = `Olá, Mãe Gabi! Gostaria de confirmar meu agendamento de Tarô:%0A%0A*Nome:* ${dadosReserva.nome}%0A*WhatsApp:* ${dadosReserva.whatsapp}%0A*Leitura:* ${dadosReserva.servico}%0A*Data:* ${dadosReserva.dataFormatada} às ${dadosReserva.hora}%0A*Intenção:* ${dadosReserva.intencao || 'Não informada'}`;
+      window.open(`https://wa.me/${telefoneMaeGabi}?text=${texto}`, '_blank');
+    }
+  </script>
+</body>
+</html>
