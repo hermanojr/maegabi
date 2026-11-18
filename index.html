@@ -109,55 +109,21 @@
       color: var(--gold);
     }
 
-    /* Botão de Música */
-    .music-btn {
-      background: rgba(212, 175, 55, 0.15);
-      border: 1px solid var(--gold);
-      color: var(--gold-light);
-      padding: 0.5rem 1.1rem;
-      border-radius: 20px;
-      font-family: 'Cinzel', serif;
-      font-size: 0.8rem;
-      cursor: pointer;
+    /* Player de Música Místico Estilizado */
+    .music-widget {
       display: flex;
       align-items: center;
-      gap: 0.55rem;
-      transition: all 0.3s ease;
+      gap: 0.6rem;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid var(--border-gold);
+      padding: 0.35rem 0.8rem;
+      border-radius: 20px;
     }
 
-    .music-btn:hover {
-      background: rgba(212, 175, 55, 0.3);
-      box-shadow: 0 0 15px var(--gold-glow);
-    }
-
-    .music-btn.playing {
-      background: linear-gradient(135deg, #c59b27, #8a6614);
-      color: #090714;
-      font-weight: 700;
-      box-shadow: 0 0 20px var(--gold-glow);
-    }
-
-    .equalizer {
-      display: inline-flex;
-      align-items: flex-end;
-      height: 12px;
-      gap: 2px;
-    }
-
-    .equalizer span {
-      display: block;
-      width: 2.5px;
-      height: 4px;
-      background-color: currentColor;
-    }
-
-    .music-btn.playing .equalizer span:nth-child(1) { animation: eq 0.8s infinite ease-in-out; }
-    .music-btn.playing .equalizer span:nth-child(2) { animation: eq 0.5s infinite ease-in-out 0.2s; }
-    .music-btn.playing .equalizer span:nth-child(3) { animation: eq 1.0s infinite ease-in-out 0.4s; }
-
-    @keyframes eq {
-      0%, 100% { height: 4px; }
-      50% { height: 13px; }
+    .music-widget span {
+      font-family: 'Cinzel', serif;
+      font-size: 0.78rem;
+      color: var(--gold-light);
     }
 
     /* Hero Section */
@@ -173,7 +139,6 @@
       justify-content: center;
       gap: 1.2rem;
       margin-bottom: 2rem;
-      perspective: 1000px;
     }
 
     .preview-card {
@@ -407,6 +372,11 @@
       transition: border-color 0.3s;
     }
 
+    /* Estilização para o calendário nativo abrir ao clicar em qualquer lugar do campo de data */
+    input[type="date"] {
+      cursor: pointer;
+    }
+
     input:focus, select:focus, textarea:focus {
       border-color: var(--gold);
     }
@@ -452,7 +422,7 @@
       border-color: var(--gold);
     }
 
-    /* Modal de Confirmação (Passo 2) */
+    /* Modal de Confirmação */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -517,16 +487,18 @@
         <a href="#oraculo">Carta do Dia</a>
         <a href="#agendar">Agendar</a>
       </nav>
-      <button type="button" id="musicToggle" class="music-btn" onclick="alternarMusicaMistica()">
-        <div class="equalizer">
-          <span></span><span></span><span></span>
-        </div>
-        <span id="musicText">Som Místico</span>
-      </button>
+      <!-- Player de Áudio Nativo Discreto (Já pronto para reproduzir) -->
+      <div class="music-widget">
+        <span>🎵 Som Místico:</span>
+        <audio controls autoplay loop style="height: 30px; width: 140px; filter: invert(0.9) hue-rotate(180deg);">
+          <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf756.mp3?filename=meditation-flute-and-bells-112151.mp3" type="audio/mpeg">
+          Seu navegador não suporta áudio.
+        </audio>
+      </div>
     </div>
   </header>
 
-  <!-- Hero Section com Cartas de Tarô Ilustrativas -->
+  <!-- Hero Section -->
   <section class="hero">
     <div class="hero-cards-preview">
       <div class="preview-card"><img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=300" alt="Carta Tarô 1"></div>
@@ -616,7 +588,7 @@
 
         <div class="form-group">
           <label for="whatsapp">WhatsApp (com DDD) *</label>
-          <input type="tel" id="whatsapp" placeholder="(81) 99933-7833">
+          <input type="tel" id="whatsapp" placeholder="(81) 999337833">
         </div>
 
         <div class="form-group">
@@ -628,9 +600,10 @@
           </select>
         </div>
 
+        <!-- Campo de Data com Calendário Nativo Integrado -->
         <div class="form-group">
-          <label for="data">Data Desejada *</label>
-          <input type="date" id="data">
+          <label for="data">Data Desejada (Clique para abrir calendário) *</label>
+          <input type="date" id="data" onclick="this.showPicker && this.showPicker()">
         </div>
 
         <div class="form-group full">
@@ -676,114 +649,7 @@
 
   <script>
     // ==========================================
-    // 1. SINTETIZADOR DE MÚSICA MÍSTICA NATIVO (WEB AUDIO API - SEM TRAVAMENTO)
-    // ==========================================
-    let audioCtx = null;
-    let isPlayingMusic = false;
-    let masterGainNode = null;
-    let mysticInterval = null;
-    let activeOscillators = [];
-
-    function alternarMusicaMistica() {
-      const btn = document.getElementById('musicToggle');
-      const text = document.getElementById('musicText');
-
-      if (!isPlayingMusic) {
-        isPlayingMusic = true;
-        btn.classList.add('playing');
-        text.textContent = 'Pausar Som';
-
-        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-        if (!audioCtx) {
-          audioCtx = new AudioContextClass();
-        }
-        if (audioCtx.state === 'suspended') {
-          audioCtx.resume();
-        }
-
-        masterGainNode = audioCtx.createGain();
-        masterGainNode.gain.setValueAtTime(0.01, audioCtx.currentTime);
-        masterGainNode.gain.linearRampToValueAtTime(0.22, audioCtx.currentTime + 1.5);
-        masterGainNode.connect(audioCtx.destination);
-
-        // Frequências harmônicas de acordes etéreos profundos
-        const baseFreqs = [130.81, 196.00, 220.00, 261.63, 329.63];
-        baseFreqs.forEach((f, index) => {
-          const osc = audioCtx.createOscillator();
-          const gain = audioCtx.createGain();
-          const filter = audioCtx.createBiquadFilter();
-
-          osc.type = index % 2 === 0 ? 'sine' : 'triangle';
-          osc.frequency.setValueAtTime(f, audioCtx.currentTime);
-
-          filter.type = 'lowpass';
-          filter.frequency.setValueAtTime(600, audioCtx.currentTime);
-
-          gain.gain.setValueAtTime(index === 0 ? 0.3 : 0.12, audioCtx.currentTime);
-
-          osc.connect(filter);
-          filter.connect(gain);
-          gain.connect(masterGainNode);
-
-          osc.start();
-          activeOscillators.push(osc);
-        });
-
-        // Toque de sino cristalino periódico
-        tocarSinoCristalino(659.25);
-        mysticInterval = setInterval(() => {
-          if (isPlayingMusic) {
-            const notas = [523.25, 587.33, 659.25, 783.99, 880.00];
-            tocarSinoCristalino(notas[Math.floor(Math.random() * notas.length)]);
-          }
-        }, 4000);
-
-      } else {
-        pararMusicaMistica();
-      }
-    }
-
-    function tocarSinoCristalino(freq) {
-      if (!audioCtx || !masterGainNode || !isPlayingMusic) return;
-      const now = audioCtx.currentTime;
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, now);
-
-      gain.gain.setValueAtTime(0.001, now);
-      gain.gain.linearRampToValueAtTime(0.15, now + 0.08);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + 3.5);
-
-      osc.connect(gain);
-      gain.connect(masterGainNode);
-
-      osc.start(now);
-      osc.stop(now + 3.6);
-    }
-
-    function pararMusicaMistica() {
-      isPlayingMusic = false;
-      const btn = document.getElementById('musicToggle');
-      const text = document.getElementById('musicText');
-      if (btn) btn.classList.remove('playing');
-      if (text) text.textContent = 'Som Místico';
-
-      clearInterval(mysticInterval);
-      if (masterGainNode && audioCtx) {
-        masterGainNode.gain.linearRampToValueAtTime(0.0001, audioCtx.currentTime + 0.8);
-      }
-      setTimeout(() => {
-        activeOscillators.forEach(o => {
-          try { o.stop(); o.disconnect(); } catch (e) {}
-        });
-        activeOscillators = [];
-      }, 900);
-    }
-
-    // ==========================================
-    // 2. DATA E SELEÇÃO DE OPÇÕES
+    // DATA MÍNIMA E SELEÇÃO DE OPÇÕES
     // ==========================================
     const dateInput = document.getElementById('data');
     const today = new Date().toISOString().split('T')[0];
@@ -802,7 +668,7 @@
     }
 
     // ==========================================
-    // 3. CARTA DO DIA
+    // CARTA DO DIA
     // ==========================================
     const arcanos = [
       { nome: "XVII — A Estrela", msg: "Momento de cura, renovação e esperança. Confie na sua intuição: o caminho à frente está sendo iluminado." },
@@ -813,7 +679,6 @@
     ];
 
     function tirarCarta() {
-      if (isPlayingMusic) tocarSinoCristalino(880);
       const sorteada = arcanos[Math.floor(Math.random() * arcanos.length)];
       document.getElementById('arcanaTitle').textContent = sorteada.nome;
       document.getElementById('arcanaDesc').textContent = sorteada.msg;
@@ -821,7 +686,7 @@
     }
 
     // ==========================================
-    // 4. CONFIRMAÇÃO E WHATSAPP
+    // CONFIRMAÇÃO E WHATSAPP
     // ==========================================
     let dadosReserva = {};
 
