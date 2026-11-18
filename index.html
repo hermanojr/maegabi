@@ -13,10 +13,10 @@
   <style>
     :root {
       --bg-deep: #090714;
-      --bg-card: rgba(22, 18, 43, 0.72);
+      --bg-card: rgba(22, 18, 43, 0.78);
       --gold: #d4af37;
       --gold-light: #f3e5ab;
-      --gold-glow: rgba(212, 175, 55, 0.25);
+      --gold-glow: rgba(212, 175, 55, 0.28);
       --purple-accent: #4c2a85;
       --text-main: #f4f1ea;
       --text-muted: #b5aec9;
@@ -41,7 +41,6 @@
       min-height: 100vh;
     }
 
-    /* Fundo estrelado sutil */
     .stars {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -79,7 +78,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(9, 7, 20, 0.85);
+      background: rgba(9, 7, 20, 0.88);
     }
 
     .brand {
@@ -94,7 +93,7 @@
     .nav-right {
       display: flex;
       align-items: center;
-      gap: 1.8rem;
+      gap: 1.5rem;
     }
 
     nav a {
@@ -113,30 +112,30 @@
 
     /* Botão de Música Ambiente */
     .music-btn {
-      background: rgba(212, 175, 55, 0.12);
-      border: 1px solid var(--border-gold);
+      background: rgba(212, 175, 55, 0.16);
+      border: 1px solid var(--gold);
       color: var(--gold-light);
-      padding: 0.45rem 1rem;
+      padding: 0.5rem 1.1rem;
       border-radius: 20px;
       font-family: 'Cinzel', serif;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.55rem;
       transition: all 0.3s ease;
     }
 
     .music-btn:hover {
-      background: rgba(212, 175, 55, 0.25);
-      border-color: var(--gold);
+      background: rgba(212, 175, 55, 0.3);
       box-shadow: 0 0 15px var(--gold-glow);
     }
 
     .music-btn.playing {
-      background: linear-gradient(135deg, rgba(197, 155, 39, 0.3), rgba(76, 42, 133, 0.5));
-      border-color: var(--gold);
-      color: #fff;
+      background: linear-gradient(135deg, #c59b27, #8a6614);
+      color: #090714;
+      font-weight: 700;
+      box-shadow: 0 0 20px var(--gold-glow);
     }
 
     .equalizer {
@@ -148,19 +147,43 @@
 
     .equalizer span {
       display: block;
-      width: 2px;
+      width: 2.5px;
       height: 4px;
-      background-color: var(--gold);
-      transition: height 0.2s;
+      background-color: currentColor;
     }
 
-    .music-btn.playing .equalizer span:nth-child(1) { animation: eq 0.9s infinite ease-in-out; }
-    .music-btn.playing .equalizer span:nth-child(2) { animation: eq 0.6s infinite ease-in-out 0.2s; }
-    .music-btn.playing .equalizer span:nth-child(3) { animation: eq 1.1s infinite ease-in-out 0.4s; }
+    .music-btn.playing .equalizer span:nth-child(1) { animation: eq 0.8s infinite ease-in-out; }
+    .music-btn.playing .equalizer span:nth-child(2) { animation: eq 0.5s infinite ease-in-out 0.2s; }
+    .music-btn.playing .equalizer span:nth-child(3) { animation: eq 1.0s infinite ease-in-out 0.4s; }
 
     @keyframes eq {
       0%, 100% { height: 4px; }
-      50% { height: 12px; }
+      50% { height: 13px; }
+    }
+
+    /* Barra Flutuante de Áudio no Canto Inferior */
+    .floating-audio-bar {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(20, 16, 41, 0.95);
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      padding: 0.7rem 1.2rem;
+      border-radius: 30px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.82rem;
+      cursor: pointer;
+      z-index: 900;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8), 0 0 15px var(--gold-glow);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: transform 0.3s;
+    }
+
+    .floating-audio-bar:hover {
+      transform: translateY(-3px);
     }
 
     /* Hero Section */
@@ -221,7 +244,7 @@
       box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
     }
 
-    /* Seção de Tiragens (Serviços) */
+    /* Seção de Tiragens */
     .section {
       padding: 4rem 8%;
       max-width: 1200px;
@@ -328,7 +351,7 @@
       font-weight: 700;
     }
 
-    /* Carta do Dia Interativa */
+    /* Carta do Dia */
     .daily-card-box {
       background: linear-gradient(145deg, rgba(35, 24, 66, 0.7), rgba(14, 11, 28, 0.9));
       border: 1px solid var(--border-gold);
@@ -352,7 +375,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Formulário de Agendamento */
+    /* Formulário */
     .booking-container {
       background: var(--bg-card);
       border: 1px solid var(--border-gold);
@@ -388,8 +411,8 @@
     }
 
     input, select, textarea {
-      background: rgba(9, 7, 20, 0.75);
-      border: 1px solid rgba(212, 175, 55, 0.3);
+      background: rgba(9, 7, 20, 0.85);
+      border: 1px solid rgba(212, 175, 55, 0.35);
       border-radius: 6px;
       padding: 0.85rem 1rem;
       color: var(--text-main);
@@ -403,7 +426,18 @@
       border-color: var(--gold);
     }
 
-    /* Seleção de Horários */
+    .erro-aviso {
+      color: #ff8a8a;
+      font-size: 0.9rem;
+      margin-bottom: 0.8rem;
+      display: none;
+      text-align: center;
+      background: rgba(255, 80, 80, 0.12);
+      padding: 0.6rem;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 80, 80, 0.3);
+    }
+
     .time-slots {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
@@ -436,25 +470,33 @@
     /* Modal de Confirmação */
     .modal-overlay {
       position: fixed;
-      inset: 0;
-      background: rgba(5, 4, 12, 0.85);
-      backdrop-filter: blur(6px);
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(5, 4, 12, 0.88);
+      backdrop-filter: blur(8px);
       display: none;
       justify-content: center;
       align-items: center;
-      z-index: 1000;
+      z-index: 9999;
       padding: 1rem;
+    }
+
+    .modal-overlay.aberto {
+      display: flex !important;
     }
 
     .modal-box {
       background: #141029;
-      border: 1px solid var(--gold);
+      border: 2px solid var(--gold);
       border-radius: 14px;
       padding: 2.5rem;
       max-width: 460px;
       width: 100%;
       text-align: center;
-      box-shadow: 0 0 40px var(--gold-glow);
+      box-shadow: 0 0 50px rgba(212, 175, 55, 0.35);
+      animation: fadeIn 0.3s ease;
     }
 
     footer {
@@ -479,6 +521,12 @@
 
   <div class="stars"></div>
 
+  <!-- Arquivo de Áudio Místico MP3 (Wikimedia Commons - Domínio Público / CC) -->
+  <audio id="bgAudio" loop preload="auto">
+    <source src="https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c8/Kevin_MacLeod_-_Touching_Moments_Two_-_Higher.ogg/Kevin_MacLeod_-_Touching_Moments_Two_-_Higher.ogg.mp3" type="audio/mpeg">
+    <source src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Kevin_MacLeod_-_Touching_Moments_Two_-_Higher.ogg" type="audio/ogg">
+  </audio>
+
   <!-- Cabeçalho -->
   <header>
     <div class="brand">
@@ -490,14 +538,19 @@
         <a href="#oraculo">Carta do Dia</a>
         <a href="#agendar">Agendar</a>
       </nav>
-      <button id="musicToggle" class="music-btn" onclick="toggleMusic()" title="Ativar/Desativar música mística de fundo">
+      <button type="button" id="musicToggle" class="music-btn" onclick="alternarMusica()">
         <div class="equalizer">
           <span></span><span></span><span></span>
         </div>
-        <span id="musicText">Som Místico</span>
+        <span id="musicText">Ativar Som Místico</span>
       </button>
     </div>
   </header>
+
+  <!-- Botão Flutuante de Música -->
+  <button type="button" id="floatingAudioBtn" class="floating-audio-bar" onclick="alternarMusica()">
+    <span>🎵</span> Ouvir Trilha Mística
+  </button>
 
   <!-- Hero -->
   <section class="hero">
@@ -508,7 +561,7 @@
     <a href="#agendar" class="btn-primary">Agendar Consulta com Mãe Gabi</a>
   </section>
 
-  <!-- Tiragens / Serviços -->
+  <!-- Tiragens -->
   <section id="tiragens" class="section">
     <div class="section-header">
       <h2>Modalidades de Leitura</h2>
@@ -516,7 +569,6 @@
     </div>
 
     <div class="cards-grid">
-      <!-- Carta 1 -->
       <div class="tarot-card">
         <div>
           <span class="arcana-num">ARCANO I • RÁPIDA</span>
@@ -525,12 +577,11 @@
           <p>Leitura objetiva para uma questão específica (amor, trabalho ou tomada de decisão imediata). Duração de 30 minutos via videochamada.</p>
         </div>
         <div>
-          <span class="price-tag">R\$ 90,00</span>
-          <button class="btn-outline" onclick="selecionarServico('Templo de Afrodite & Foco (30 min)')">Escolher Esta Tiragem</button>
+          <span class="price-tag">R$ 90,00</span>
+          <button type="button" class="btn-outline" onclick="selecionarServico('Templo de Afrodite & Foco (30 min)')">Escolher Esta Tiragem</button>
         </div>
       </div>
 
-      <!-- Carta 2 -->
       <div class="tarot-card">
         <div>
           <span class="arcana-num">ARCANO XVII • COMPLETA</span>
@@ -539,12 +590,11 @@
           <p>Análise profunda das energias atuais, bloqueios inconscientes, influências externas e tendências para os próximos 6 meses. Duração de 60 minutos.</p>
         </div>
         <div>
-          <span class="price-tag">R\$ 160,00</span>
-          <button class="btn-outline" onclick="selecionarServico('Cruz Celta & Panorama (60 min)')">Escolher Esta Tiragem</button>
+          <span class="price-tag">R$ 160,00</span>
+          <button type="button" class="btn-outline" onclick="selecionarServico('Cruz Celta & Panorama (60 min)')">Escolher Esta Tiragem</button>
         </div>
       </div>
 
-      <!-- Carta 3 -->
       <div class="tarot-card">
         <div>
           <span class="arcana-num">ARCANO XXI • ANUAL</span>
@@ -553,8 +603,8 @@
           <p>Mapeamento completo das 12 casas da sua vida (finanças, relacionamentos, espiritualidade e propósito) para os próximos 12 meses. Duração de 90 minutos.</p>
         </div>
         <div>
-          <span class="price-tag">R\$ 240,00</span>
-          <button class="btn-outline" onclick="selecionarServico('Mandala Astrológica (90 min)')">Escolher Esta Tiragem</button>
+          <span class="price-tag">R$ 240,00</span>
+          <button type="button" class="btn-outline" onclick="selecionarServico('Mandala Astrológica (90 min)')">Escolher Esta Tiragem</button>
         </div>
       </div>
     </div>
@@ -563,7 +613,7 @@
     <div id="oraculo" class="daily-card-box">
       <h3 style="color: var(--gold); margin-bottom: 0.5rem;">✦ Consagração Rápida: Tire uma Carta Agora ✦</h3>
       <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.2rem;">Concentre-se em uma intenção e receba um conselho gratuito dos Arcanos Maiores antes da sua consulta com Mãe Gabi.</p>
-      <button class="btn-outline" style="max-width: 260px;" onclick="tirarCarta()">Revelar Meu Arcano</button>
+      <button type="button" class="btn-outline" style="max-width: 260px;" onclick="tirarCarta()">Revelar Meu Arcano</button>
       
       <div id="dailyResult" class="daily-result">
         <h4 id="arcanaTitle" style="font-family: 'Cinzel', serif; color: var(--gold-light); font-size: 1.3rem;"></h4>
@@ -580,65 +630,64 @@
     </div>
 
     <div class="booking-container">
-      <form id="bookingForm" onsubmit="confirmarAgendamento(event)">
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="nome">Seu Nome Completo</label>
-            <input type="text" id="nome" required placeholder="Ex: Marina Silva">
-          </div>
-
-          <div class="form-group">
-            <label for="whatsapp">WhatsApp (com DDD)</label>
-            <input type="tel" id="whatsapp" required placeholder="(81) 99933-7833">
-          </div>
-
-          <div class="form-group">
-            <label for="servico">Modalidade da Leitura</label>
-            <select id="servico" required>
-              <option value="Templo de Afrodite & Foco (30 min)">Templo de Afrodite & Foco — R\$ 90</option>
-              <option value="Cruz Celta & Panorama (60 min)" selected>Cruz Celta & Panorama — R\$ 160</option>
-              <option value="Mandala Astrológica (90 min)">Mandala Astrológica — R\$ 240</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="data">Data Desejada</label>
-            <input type="date" id="data" required>
-          </div>
-
-          <div class="form-group full">
-            <label>Horários Disponíveis</label>
-            <div class="time-slots" id="timeSlots">
-              <button type="button" class="slot-btn" onclick="selecionarHorario(this, '10:00')">10:00</button>
-              <button type="button" class="slot-btn" onclick="selecionarHorario(this, '14:00')">14:00</button>
-              <button type="button" class="slot-btn active" onclick="selecionarHorario(this, '16:00')">16:00</button>
-              <button type="button" class="slot-btn" onclick="selecionarHorario(this, '18:30')">18:30</button>
-              <button type="button" class="slot-btn" onclick="selecionarHorario(this, '20:00')">20:00</button>
-            </div>
-            <input type="hidden" id="horarioSelecionado" value="16:00" required>
-          </div>
-
-          <div class="form-group full">
-            <label for="intencao">Tema ou Intenção Principal (Opcional)</label>
-            <textarea id="intencao" rows="3" placeholder="Conte brevemente sobre o momento que está vivendo ou áreas que deseja explorar..."></textarea>
-          </div>
-
-          <div class="form-group full" style="margin-top: 0.5rem;">
-            <button type="submit" class="btn-primary" style="width: 100%; font-size: 1rem;">Confirmar Agendamento</button>
-          </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="nome">Seu Nome Completo *</label>
+          <input type="text" id="nome" placeholder="Ex: Marina Silva">
         </div>
-      </form>
+
+        <div class="form-group">
+          <label for="whatsapp">WhatsApp (com DDD) *</label>
+          <input type="tel" id="whatsapp" placeholder="(81) 99999-9999">
+        </div>
+
+        <div class="form-group">
+          <label for="servico">Modalidade da Leitura</label>
+          <select id="servico">
+            <option value="Templo de Afrodite & Foco (30 min)">Templo de Afrodite & Foco — R$ 90</option>
+            <option value="Cruz Celta & Panorama (60 min)" selected>Cruz Celta & Panorama — R$ 160</option>
+            <option value="Mandala Astrológica (90 min)">Mandala Astrológica — R$ 240</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="data">Data Desejada *</label>
+          <input type="date" id="data">
+        </div>
+
+        <div class="form-group full">
+          <label>Horários Disponíveis</label>
+          <div class="time-slots" id="timeSlots">
+            <button type="button" class="slot-btn" onclick="selecionarHorario(this, '10:00')">10:00</button>
+            <button type="button" class="slot-btn" onclick="selecionarHorario(this, '14:00')">14:00</button>
+            <button type="button" class="slot-btn active" onclick="selecionarHorario(this, '16:00')">16:00</button>
+            <button type="button" class="slot-btn" onclick="selecionarHorario(this, '18:30')">18:30</button>
+            <button type="button" class="slot-btn" onclick="selecionarHorario(this, '20:00')">20:00</button>
+          </div>
+          <input type="hidden" id="horarioSelecionado" value="16:00">
+        </div>
+
+        <div class="form-group full">
+          <label for="intencao">Tema ou Intenção Principal (Opcional)</label>
+          <textarea id="intencao" rows="3" placeholder="Conte brevemente sobre o momento que está vivendo ou áreas que deseja explorar..."></textarea>
+        </div>
+
+        <div class="form-group full">
+          <div id="erroForm" class="erro-aviso">Por favor, preencha seu Nome, WhatsApp e Data antes de confirmar.</div>
+          <button type="button" class="btn-primary" onclick="abrirResumoAgendamento()" style="width: 100%; font-size: 1rem;">Confirmar Agendamento</button>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Modal de Confirmação -->
+  <!-- Modal de Confirmação (Passo 2) -->
   <div class="modal-overlay" id="confirmModal">
     <div class="modal-box">
       <div style="font-size: 2.5rem; color: var(--gold); margin-bottom: 0.5rem;">✦</div>
       <h3 style="color: var(--gold); font-size: 1.5rem; margin-bottom: 0.8rem;">Consulta Pré-Agendada</h3>
-      <p id="modalResumo" style="color: var(--text-main); font-size: 0.95rem; margin-bottom: 1.5rem;"></p>
-      <button class="btn-primary" onclick="enviarWhatsApp()" style="width: 100%; margin-bottom: 0.8rem;">Finalizar com Mãe Gabi no WhatsApp</button>
-      <button class="btn-outline" onclick="fecharModal()">Fechar</button>
+      <p id="modalResumo" style="color: var(--text-main); font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.6;"></p>
+      <button type="button" class="btn-primary" onclick="enviarWhatsApp()" style="width: 100%; margin-bottom: 0.8rem;">Finalizar com Mãe Gabi no WhatsApp</button>
+      <button type="button" class="btn-outline" onclick="fecharModal()">Voltar / Alterar Dados</button>
     </div>
   </div>
 
@@ -649,120 +698,69 @@
 
   <script>
     // ==========================================
-    // SINTETIZADOR DE MÚSICA MÍSTICA (WEB AUDIO)
+    // 1. CONTROLE DE MÚSICA MÍSTICA (MP3 + RESERVA)
     // ==========================================
-    let audioCtx = null;
-    let isPlaying = false;
-    let masterGain = null;
-    let chimeInterval = null;
-    let activeOscillators = [];
+    const bgAudio = document.getElementById('bgAudio');
+    bgAudio.volume = 0.45;
+    let tocando = false;
+    let fallbackCtx = null;
+    let fallbackOscs = [];
 
-    function iniciarSomMistico() {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
+    function iniciarFallbackSintetizador() {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!fallbackCtx) fallbackCtx = new AudioCtx();
+      if (fallbackCtx.state === 'suspended') fallbackCtx.resume();
 
-      masterGain = audioCtx.createGain();
-      masterGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
-      masterGain.gain.exponentialRampToValueAtTime(0.18, audioCtx.currentTime + 2.5);
-      masterGain.connect(audioCtx.destination);
+      const gain = fallbackCtx.createGain();
+      gain.gain.value = 0.15;
+      gain.connect(fallbackCtx.destination);
 
-      // Drone etéreo profundo (Acorde místico em Ré menor / Dó# suspenso - 432Hz vibe)
-      const freqs = [146.83, 220.00, 261.63, 329.63]; // D3, A3, C4, E4
-      freqs.forEach((f, idx) => {
-        const osc = audioCtx.createOscillator();
-        const oscGain = audioCtx.createGain();
-        const filter = audioCtx.createBiquadFilter();
-
-        osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
-        osc.frequency.setValueAtTime(f, audioCtx.currentTime);
-
-        // Leve modulação para efeito espacial
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(600, audioCtx.currentTime);
-
-        oscGain.gain.setValueAtTime(idx === 0 ? 0.35 : 0.15, audioCtx.currentTime);
-
-        osc.connect(filter);
-        filter.connect(oscGain);
-        oscGain.connect(masterGain);
-
+      [174.61, 261.63, 329.63].forEach(freq => {
+        const osc = fallbackCtx.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        osc.connect(gain);
         osc.start();
-        activeOscillators.push(osc);
+        fallbackOscs.push(osc);
       });
-
-      // Sinos de cristal / tigela tibetana periódicos
-      const scale = [523.25, 587.33, 659.25, 783.99, 880.00, 1046.50]; // Pentatônica etérea
-      chimeInterval = setInterval(() => {
-        if (!isPlaying) return;
-        tocarSinoCristal(scale[Math.floor(Math.random() * scale.length)]);
-      }, 3800);
     }
 
-    function tocarSinoCristal(freq) {
-      if (!audioCtx || !masterGain) return;
-      const now = audioCtx.currentTime;
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, now);
-
-      gain.gain.setValueAtTime(0.0001, now);
-      gain.gain.exponentialRampToValueAtTime(0.12, now + 0.15);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + 4.5);
-
-      osc.connect(gain);
-      gain.connect(masterGain);
-
-      osc.start(now);
-      osc.stop(now + 4.6);
+    function pararFallbackSintetizador() {
+      fallbackOscs.forEach(o => { try { o.stop(); } catch(e) {} });
+      fallbackOscs = [];
     }
 
-    function pararSomMistico() {
-      if (masterGain && audioCtx) {
-        masterGain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.2);
-      }
-      clearInterval(chimeInterval);
-      setTimeout(() => {
-        activeOscillators.forEach(osc => {
-          try { osc.stop(); osc.disconnect(); } catch (e) {}
-        });
-        activeOscillators = [];
-      }, 1250);
-    }
-
-    function toggleMusic() {
+    function alternarMusica() {
       const btn = document.getElementById('musicToggle');
       const text = document.getElementById('musicText');
+      const floatBtn = document.getElementById('floatingAudioBtn');
 
-      if (!isPlaying) {
-        isPlaying = true;
-        iniciarSomMistico();
+      if (!tocando) {
+        tocando = true;
         btn.classList.add('playing');
         text.textContent = 'Pausar Som';
-      } else {
-        isPlaying = false;
-        pararSomMistico();
-        btn.classList.remove('playing');
-        text.textContent = 'Som Místico';
-      }
-    }
+        if (floatBtn) floatBtn.innerHTML = '<span>⏸️</span> Pausar Trilha Mística';
 
-    // Inicia suavemente na primeira interação do usuário na página (respeitando bloqueio de autoplay dos navegadores)
-    function autoStartMusicOnce() {
-      if (!isPlaying) {
-        toggleMusic();
+        // Tenta tocar o MP3 instrumental místico; se falhar, aciona o sintetizador
+        const playPromise = bgAudio.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            iniciarFallbackSintetizador();
+          });
+        }
+      } else {
+        tocando = false;
+        btn.classList.remove('playing');
+        text.textContent = 'Ativar Som Místico';
+        if (floatBtn) floatBtn.innerHTML = '<span>🎵</span> Ouvir Trilha Mística';
+
+        bgAudio.pause();
+        pararFallbackSintetizador();
       }
-      document.removeEventListener('click', autoStartMusicOnce);
     }
-    document.addEventListener('click', autoStartMusicOnce);
 
     // ==========================================
-    // LÓGICA DO AGENDAMENTO E ORÁCULO
+    // 2. DATA E SELEÇÃO DE OPÇÕES
     // ==========================================
     const dateInput = document.getElementById('data');
     const today = new Date().toISOString().split('T')[0];
@@ -770,8 +768,7 @@
     dateInput.value = today;
 
     function selecionarServico(nomeServico) {
-      const select = document.getElementById('servico');
-      select.value = nomeServico;
+      document.getElementById('servico').value = nomeServico;
       document.getElementById('agendar').scrollIntoView({ behavior: 'smooth' });
     }
 
@@ -781,6 +778,9 @@
       document.getElementById('horarioSelecionado').value = hora;
     }
 
+    // ==========================================
+    // 3. CARTA DO DIA
+    // ==========================================
     const arcanos = [
       { nome: "XVII — A Estrela", msg: "Momento de cura, renovação e esperança. Confie na sua intuição: o caminho à frente está sendo iluminado." },
       { nome: "I — O Mago", msg: "Você já possui todas as ferramentas necessárias para manifestar o que deseja. Dê o primeiro passo com confiança." },
@@ -790,35 +790,63 @@
     ];
 
     function tirarCarta() {
-      if (isPlaying) tocarSinoCristal(880); // Efeito sonoro místico ao revelar a carta
       const sorteada = arcanos[Math.floor(Math.random() * arcanos.length)];
       document.getElementById('arcanaTitle').textContent = sorteada.nome;
       document.getElementById('arcanaDesc').textContent = sorteada.msg;
       document.getElementById('dailyResult').style.display = 'block';
     }
 
+    // ==========================================
+    // 4. CONFIRMAÇÃO (PASSO 2) E WHATSAPP
+    // ==========================================
     let dadosReserva = {};
 
-    function confirmarAgendamento(e) {
-      e.preventDefault();
-      const nome = document.getElementById('nome').value;
+    function abrirResumoAgendamento() {
+      const nome = document.getElementById('nome').value.trim();
+      const whatsapp = document.getElementById('whatsapp').value.trim();
       const servico = document.getElementById('servico').value;
       const dataRaw = document.getElementById('data').value;
-      const dataFormatada = dataRaw.split('-').reverse().join('/');
       const hora = document.getElementById('horarioSelecionado').value;
-      const intencao = document.getElementById('intencao').value;
+      const intencao = document.getElementById('intencao').value.trim();
+      const erroBox = document.getElementById('erroForm');
 
-      dadosReserva = { nome, servico, dataFormatada, hora, intencao };
+      // Validação visual amigável
+      if (!nome || !whatsapp || !dataRaw) {
+        erroBox.style.display = 'block';
+        return;
+      }
+      erroBox.style.display = 'none';
+
+      const dataFormatada = dataRaw.split('-').reverse().join('/');
+      dadosReserva = { nome, whatsapp, servico, dataFormatada, hora, intencao };
 
       document.getElementById('modalResumo').innerHTML = `
-        Olá, <strong>\${nome}</strong>!<br><br>
-        Sua solicitação com <strong>Mãe Gabi</strong> para <strong>\${servico}</strong> no dia <strong>${dataFormatada}</strong> às <strong>${hora}</strong> está pronta.<br><br>
-        Clique abaixo para confirmar diretamente pelo WhatsApp.
+        Olá, <strong>${nome}</strong>!<br><br>
+        Sua solicitação com <strong>Mãe Gabi</strong>:<br>
+        • <strong>Leitura:</strong> ${servico}<br>
+        • <strong>Data:</strong> ${dataFormatada} às <strong>${hora}</strong><br>
+        • <strong>Seu WhatsApp:</strong> ${whatsapp}<br><br>
+        Clique no botão dourado abaixo para enviar e confirmar direto no WhatsApp da Mãe Gabi.
       `;
-      document.getElementById('confirmModal').style.display = 'flex';
+
+      // Exibe o Passo 2 (Modal)
+      const modal = document.getElementById('confirmModal');
+      modal.classList.add('aberto');
+      modal.style.display = 'flex';
+    }
+
+    function fecharModal() {
+      const modal = document.getElementById('confirmModal');
+      modal.classList.remove('aberto');
+      modal.style.display = 'none';
     }
 
     function enviarWhatsApp() {
-      const telefoneMaeGabi = "5581999337833"; 
-      const texto = `Olá, Mãe Gabi! Gostaria de confirmar meu agendamento de Tarô:%0A%0A*Nome:* \${dadosReserva.nome}%0A*Leitura:* ${dadosReserva.servico}\%0A*Data:*${dadosReserva.dataFormatada} às ${dadosReserva.hora}\%0A*Intenção:* ${dadosReserva.intencao || 'Não informada'}`;
-      window.open(`
+      // TROQUE PELO WHATSAPP DA MÃE GABI (55 + DDD + NÚMERO)
+      const telefoneMaeGabi = "5581999999999"; 
+      const texto = `Olá, Mãe Gabi! Gostaria de confirmar meu agendamento de Tarô:%0A%0A*Nome:* ${dadosReserva.nome}%0A*WhatsApp:* ${dadosReserva.whatsapp}%0A*Leitura:* ${dadosReserva.servico}%0A*Data:* ${dadosReserva.dataFormatada} às ${dadosReserva.hora}%0A*Intenção:* ${dadosReserva.intencao || 'Não informada'}`;
+      window.open(`https://wa.me/${telefoneMaeGabi}?text=${texto}`, '_blank');
+    }
+  </script>
+</body>
+</html>
