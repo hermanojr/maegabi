@@ -616,7 +616,7 @@
 
         <div class="form-group">
           <label for="whatsapp">WhatsApp (com DDD) *</label>
-          <input type="tel" id="whatsapp" placeholder="(81) 99999-9999">
+          <input type="tel" id="whatsapp" placeholder="(81) 99933-7833">
         </div>
 
         <div class="form-group">
@@ -862,7 +862,7 @@
     }
 
     function enviarWhatsApp() {
-      const telefoneMaeGabi = "5581999999999"; // Substitua pelo número real da Mãe Gabi
+      const telefoneMaeGabi = "5581999337833"; // Substitua pelo número real da Mãe Gabi
       const texto = `Olá, Mãe Gabi! Gostaria de confirmar meu agendamento de Tarô:%0A%0A*Nome:* ${dadosReserva.nome}%0A*WhatsApp:* ${dadosReserva.whatsapp}%0A*Leitura:* ${dadosReserva.servico}%0A*Data:* ${dadosReserva.dataFormatada} às ${dadosReserva.hora}%0A*Intenção:* ${dadosReserva.intencao || 'Não informada'}`;
       window.open(`https://wa.me/${telefoneMaeGabi}?text=${texto}`, '_blank');
     }
